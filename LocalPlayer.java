@@ -19,7 +19,7 @@ public class LocalPlayer {
 		this.id = id;
 	}
 	
-	//[for 'shuffleCards' create random number
+	//for 'shuffleCards' create random number
 	private static int getRandom(int max) {
 		Random r = new Random();
 		return r.nextInt(max) + 1;
@@ -237,7 +237,6 @@ public class LocalPlayer {
 		serverSocket.close();
 	}
 	
-	
 	//start a game (mix cards, pass to players)
 	public static void startGame (int port1, int port2, int port3, int port4) throws IOException {
 		LocalPlayer player1 = new LocalPlayer (port1, 1);
@@ -258,5 +257,4 @@ public class LocalPlayer {
 		player4.handOutCards();
 		
 	}
-
 }
