@@ -23,7 +23,7 @@ public class Player {
 			int inputCard1, inputCard2, inputCard3, inputCard4, inputCard5, inputCard6, inputCard7, inputCard8;
 			int port = playerPort; 
 			try {
-				Socket socket = new Socket("192.168.2.10", port);
+				Socket socket = new Socket("127.0.0.1", port);
 				Thread.sleep(200);
 				Scanner scanner = new Scanner (socket.getInputStream());
 				inputCard1 = scanner.nextInt();
