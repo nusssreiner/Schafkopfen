@@ -8,6 +8,7 @@ public class Card {
 	
 	//constructor
 	public Card (int Id) {
+		cardId = Id;
 		switch (Id) {
 		case 1:
 			color = Color.OACHE;
@@ -35,7 +36,7 @@ public class Card {
 			break;
 		case 7:
 			color = Color.OACHE;
-			number = Number.KÖNIG;
+			number = Number.KOENIG;
 			break;
 		case 8:
 			color = Color.OACHE;
@@ -67,7 +68,7 @@ public class Card {
 			break;
 		case 15:
 			color = Color.GROS;
-			number = Number.KÖNIG;
+			number = Number.KOENIG;
 			break;
 		case 16:
 			color = Color.GROS;
@@ -99,7 +100,7 @@ public class Card {
 			break;
 		case 23:
 			color = Color.HERZ;
-			number = Number.KÖNIG;
+			number = Number.KOENIG;
 			break;
 		case 24:
 			color = Color.HERZ;
@@ -131,7 +132,7 @@ public class Card {
 			break;
 		case 31:
 			color = Color.SCHOIN;
-			number = Number.KÖNIG;
+			number = Number.KOENIG;
 			break;
 		case 32:
 			color = Color.SCHOIN;
@@ -139,8 +140,11 @@ public class Card {
 			break;
 		}
 	}
-	
-	
+
+	public int getCardId() {
+		return cardId;
+	}
+
 	public static String getCardInfo(int Id) {
 		Card card = new Card(Id);
 		return card.color.toString() + " " + card.number.toString();

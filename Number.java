@@ -6,6 +6,6 @@ public enum Number {
 	ZEHN,
 	UNTER,
 	OBER,
-	KÖNIG,
+	KOENIG,
 	SAU
 }
