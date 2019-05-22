@@ -143,7 +143,7 @@ public class Player {
 				
 				}
 				printStream.println(cardId);
-				System.out.println("You played your card: " + cardId);
+				System.out.println("You played your card: " + Card.getCardInfo(cardId));
 				scanner.close();
 				socket.close();
 			}	
