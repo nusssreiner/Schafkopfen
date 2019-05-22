@@ -252,9 +252,9 @@ public class LocalPlayer {
 		player4.assignCards();
 		
 		player1.handOutCards();
-		player2.handOutCards();
-		player3.handOutCards();
-		player4.handOutCards();
+//		player2.handOutCards();
+//		player3.handOutCards();
+//		player4.handOutCards();
 		
 	}
 }

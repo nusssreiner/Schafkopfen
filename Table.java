@@ -9,18 +9,19 @@ public class Table {
 	
 	public Table (int beginningPlayer) {
 		nextPlayer = beginningPlayer;
-		port1 = Game.getPort1();
+		port1 = 3001; /*Game.getPort1();*/
 		port2 = Game.getPort2();
 		port3 = Game.getPort3();
 		port4 = Game.getPort4();
 	}
 	
 	//send request to player to play card
-	public void request() throws IOException {
-		ServerSocket serverSocket = new ServerSocket(port1);
+	public static void request() throws IOException {
+		Table table = new Table (1);
+		ServerSocket serverSocket = new ServerSocket(table.port1);
 		Socket socket = serverSocket.accept();
 		PrintStream printStream = new PrintStream(socket.getOutputStream());
-		printStream.println("Play");
+//		printStream.println("Play");
 		Scanner scanner = new Scanner (socket.getInputStream());
 		System.out.println("The folling card was played: " + scanner.nextInt());
 	}

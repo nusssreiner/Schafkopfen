@@ -16,8 +16,8 @@ public class Game {
 	public static void main (String[] args) throws IOException {
 		Game.createGame(3001, 3002, 3003, 3004);
 		LocalPlayer.startGame(port1, port2, port3, port4);
-		//Table table = new Table (1);
-		//table.request();
+		Table table = new Table (1);
+		table.request();
 	}
 	
 	public static int getPort1 () {

@@ -93,7 +93,7 @@ public class Player {
 				Thread.sleep(200);
 				Scanner scanner = new Scanner (socket.getInputStream());
 				Scanner input = new Scanner (System.in);
-				System.out.println(scanner.next());
+	//			System.out.println(scanner.next());
 				PrintStream printStream = new PrintStream(socket.getOutputStream());
 				System.out.println("Enter your choice by typing cardx");
 				System.out.println("You have the following cards available:");
@@ -156,9 +156,9 @@ public class Player {
 		player.setUpPlayer();
 		System.out.println("\'" + player.playerPort + "\' has been set as your port.");
 		
-		player.receiveCards();
+		//player.receiveCards();
 		
-		//player.playCard();
+		player.playCard();
 		
 		
 	}
