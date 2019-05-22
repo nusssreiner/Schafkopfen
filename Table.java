@@ -16,14 +16,15 @@ public class Table {
 	}
 	
 	//send request to player to play card
-	public static void request() throws IOException {
+	public void request () throws IOException {
 		Table table = new Table (1);
-		ServerSocket serverSocket = new ServerSocket(table.port1);
+		ServerSocket serverSocket = new ServerSocket(port1);
 		Socket socket = serverSocket.accept();
 		PrintStream printStream = new PrintStream(socket.getOutputStream());
 //		printStream.println("Play");
 		Scanner scanner = new Scanner (socket.getInputStream());
 		System.out.println("The folling card was played: " + scanner.nextInt());
+		serverSocket.close();
 	}
 	
 }

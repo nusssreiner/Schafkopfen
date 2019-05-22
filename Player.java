@@ -46,7 +46,6 @@ public class Player {
 			}
 		}
 		playerPort = port;
-		scanner.close();
 
 	}
 	
@@ -156,7 +155,7 @@ public class Player {
 		player.setUpPlayer();
 		System.out.println("\'" + player.playerPort + "\' has been set as your port.");
 		
-		//player.receiveCards();
+		player.receiveCards();
 		
 		player.playCard();
 		
