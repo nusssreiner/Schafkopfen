@@ -1,3 +1,3 @@
 # Schafkopfen
-run player four times first
+run player four times first;
 then run game
