@@ -79,6 +79,7 @@ public class Player {
 				card8 = inputCard8;
 				System.out.println();
 				System.out.println("You received the following cards: ");
+				System.out.println(card1);
 				System.out.println(Card.getCardInfo(card1));
 				System.out.println(Card.getCardInfo(card2));
 				System.out.println(Card.getCardInfo(card3));
