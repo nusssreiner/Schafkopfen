@@ -180,7 +180,7 @@ public class Card {
 
 	public static String getCardInfo(int Id) {
 		Card card = new Card(Id);
-		return card.color.toString() + " " + card.number.toString();
+		return card.color.toString() + " " + card.number.toString() + " " + card.type.toString();
 	}
 	
 	public static String getColor(int Id) {
@@ -191,6 +191,11 @@ public class Card {
 	public static String getNumber(int Id) {
 		Card card = new Card(Id);
 		return card.number.toString();
+	}
+	
+	public static String getType(int Id) {
+		Card card = new Card(Id);
+		return card.type.toString();
 	}
 }
 
