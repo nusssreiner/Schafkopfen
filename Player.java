@@ -19,15 +19,15 @@ public class Player {
 	
 	//creating player (p gets to chose name and port)
 	private void setUpPlayer() {
-		Scanner scanner = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		System.out.println("Enter your name!");
-		playerName = scanner.next();
+		playerName = input.next();
 		System.out.println("You chose \'" + playerName + "\' as your name.");
 		System.out.println("Now choose an ID! Enter a number from 1-4");
 		System.out.println("Make sure noone else in your game choses the same number as you!");
 		port = 0;
 		while (port == 0) {
-			int id = scanner.nextInt();
+			int id = input.nextInt();
 			switch(id) {
 			case 1:
 				port = 3001;
@@ -86,7 +86,8 @@ public class Player {
 	
 	//play card
 	public void playCard() throws InterruptedException {
-		while (true) {
+		int cardId = 0;
+		while (cardId == 0) {
 			try {
 				Socket socket = new Socket("127.0.0.1", port);
 				Thread.sleep(200);
@@ -94,7 +95,6 @@ public class Player {
 				Scanner input = new Scanner (System.in);
 	//			System.out.println(scanner.next());
 				PrintStream printStream = new PrintStream(socket.getOutputStream());
-				System.out.println("Enter your choice by typing cardx");
 				System.out.println("You have the following cards available:");
 				System.out.println("card1 = " + card1); //planning on adding class card with return method
 				System.out.println("card2 = " + card2);
@@ -104,7 +104,8 @@ public class Player {
 				System.out.println("card6 = " + card6);
 				System.out.println("card7 = " + card7);
 				System.out.println("card8 = " + card8);
-				int cardId = 0;
+				System.out.println("Enter your choice by typing cardx");
+				
 				String choice;
 				choice = input.next();
 				while (cardId == 0) {
@@ -138,6 +139,7 @@ public class Player {
 						System.out.println("Invalid entry, try again");
 						choice = input.next();
 					}
+				
 				}
 				printStream.println(cardId);
 				System.out.println("You played your card: " + cardId);
@@ -148,6 +150,7 @@ public class Player {
 			}
 			Thread.sleep(200);
 		}
+		System.out.println("just exited loop!");
 	}
 	
 	public static void main (String[] args) throws IOException, InterruptedException {
