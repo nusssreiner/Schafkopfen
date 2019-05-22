@@ -57,7 +57,7 @@ public class Player {
 			int port = playerPort; 
 			try {
 				Socket socket = new Socket("127.0.0.1", port);
-				Thread.sleep(200);
+				Thread.sleep(500);
 				Scanner scanner = new Scanner (socket.getInputStream());
 				inputCard1 = scanner.nextInt();
 				inputCard2 = scanner.nextInt();
@@ -77,7 +77,16 @@ public class Player {
 				card6 = inputCard6;
 				card7 = inputCard7;
 				card8 = inputCard8;
-//				System.out.println("De kartn hosd griagd: " + card1 + ", " + card2 + ", " + card3 + ", " + card4 + ", " + card5 + ", " + card6 + ", " + card7 + " und " + card8 + ".");
+				System.out.println();
+				System.out.println("You received the following cards: ");
+				System.out.println(Card.getCardInfo(card1));
+				System.out.println(Card.getCardInfo(card2));
+				System.out.println(Card.getCardInfo(card3));
+				System.out.println(Card.getCardInfo(card4));
+				System.out.println(Card.getCardInfo(card5));
+				System.out.println(Card.getCardInfo(card6));
+				System.out.println(Card.getCardInfo(card7));
+				System.out.println(Card.getCardInfo(card8));
 			}	
 			catch ( IOException e ){
 			}
@@ -94,10 +103,10 @@ public class Player {
 				Scanner scanner = new Scanner (socket.getInputStream());
 				Scanner input = new Scanner (System.in);
 				System.out.println();
-				
-				System.out.println("Table states: \'" + scanner.next() + " " +  scanner.next() + " " + scanner.next() + " " +  scanner.next() + " " +  scanner.next() + "\'");
-				System.out.println("Table states: \'" + scanner.next() + " " +  scanner.next() + " " +  scanner.next() + "\'");
-				System.out.println("Table requests: \'" + scanner.next() + " " +  scanner.next() + " " + scanner.next() + "\'");
+				int firstCard = scanner.nextInt();
+				System.out.println("Table states: \'" + scanner.nextLine() + "\'");
+				System.out.println("Table states: \'" + scanner.nextLine() + "\'");
+				System.out.println("Table requests: \'" + scanner.nextLine() + "\'");
 				PrintStream printStream = new PrintStream(socket.getOutputStream());
 				System.out.println("You have the following cards available:");
 				System.out.println("card1 = " + Card.getCardInfo(card1)); //planning on adding class card with return method
@@ -111,7 +120,7 @@ public class Player {
 				System.out.println("Enter your choice by typing cardx");
 				
 				String choice;
-				choice = input.next();
+				choice = input.nextLine();
 				while (cardId == 0) {
 					switch (choice) {
 						case "card1":
@@ -141,7 +150,7 @@ public class Player {
 					}
 					if (cardId == 0) {
 						System.out.println("Invalid entry, try again");
-						choice = input.next();
+						choice = input.nextLine();
 					}
 				
 				}
@@ -164,9 +173,8 @@ public class Player {
 		System.out.println("\'" + player.playerPort + "\' has been set as your port.");
 		
 		player.receiveCards();
-		
 		player.playCard();
-		
+
 		
 	}
 	
