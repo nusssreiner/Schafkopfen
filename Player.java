@@ -77,7 +77,7 @@ public class Player {
 				card6 = inputCard6;
 				card7 = inputCard7;
 				card8 = inputCard8;
-				System.out.println("De kartn hosd griagd: " + card1 + ", " + card2 + ", " + card3 + ", " + card4 + ", " + card5 + ", " + card6 + ", " + card7 + " und " + card8 + ".");
+//				System.out.println("De kartn hosd griagd: " + card1 + ", " + card2 + ", " + card3 + ", " + card4 + ", " + card5 + ", " + card6 + ", " + card7 + " und " + card8 + ".");
 			}	
 			catch ( IOException e ){
 			}
@@ -94,6 +94,9 @@ public class Player {
 				Scanner scanner = new Scanner (socket.getInputStream());
 				Scanner input = new Scanner (System.in);
 				System.out.println();
+				
+				System.out.println("Table states: \'" + scanner.next() + " " +  scanner.next() + " " + scanner.next() + " " +  scanner.next() + " " +  scanner.next() + "\'");
+				System.out.println("Table states: \'" + scanner.next() + " " +  scanner.next() + " " +  scanner.next() + "\'");
 				System.out.println("Table requests: \'" + scanner.next() + " " +  scanner.next() + " " + scanner.next() + "\'");
 				PrintStream printStream = new PrintStream(socket.getOutputStream());
 				System.out.println("You have the following cards available:");

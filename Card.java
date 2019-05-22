@@ -145,7 +145,15 @@ public class Card {
 		Card card = new Card(Id);
 		return card.color.toString() + " " + card.number.toString();
 	}
+	
+	public static String getColor(int Id) {
+		Card card = new Card(Id);
+		return card.color.toString();
+	}
 
-
+	public static String getNumber(int Id) {
+		Card card = new Card(Id);
+		return card.number.toString();
+	}
 }
 
