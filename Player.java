@@ -146,6 +146,7 @@ public class Player {
 			}	
 			catch ( IOException e ){
 			}
+			Thread.sleep(200);
 		}
 	}
 	

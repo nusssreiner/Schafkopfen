@@ -16,7 +16,7 @@ public class Table {
 	}
 	
 	//send request to player to play card
-	public void request () throws IOException {
+	public void request() throws IOException {
 		Table table = new Table (1);
 		ServerSocket serverSocket = new ServerSocket(port1);
 		Socket socket = serverSocket.accept();
