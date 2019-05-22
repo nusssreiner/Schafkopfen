@@ -17,7 +17,7 @@ public class Game {
 		startingPlayer = whoStarts;
 	}
 	
-	public static void main (String[] args) throws IOException {
+	private static void chooseStartingPlayer() {
 		System.out.println("Enter the ID of the player who gets to start! (1-4)");
 		Scanner sc = new Scanner(System.in);
 		int whoStarts = 0;
@@ -34,10 +34,14 @@ public class Game {
 			catch (InputMismatchException e) {
 				System.out.println("Invalid entry, try again");
 				sc.next();
-			}			
+			}	
 		}
-		
-		Game.createGame(3001, 3002, 3003, 3004, whoStarts);
+		startingPlayer = whoStarts;
+	}
+	
+	public static void main (String[] args) throws IOException {
+		Game.chooseStartingPlayer();		
+		Game.createGame(3001, 3002, 3003, 3004, startingPlayer);
 		System.out.println("Connecting to players and handing out cards.");
 		LocalPlayer.startGame(port1, port2, port3, port4);
 		System.out.println("Opening Table and asking Player " + startingPlayer + " to start.");
