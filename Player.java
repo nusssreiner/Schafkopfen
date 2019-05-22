@@ -171,9 +171,9 @@ public class Player {
 		Player player = new Player("0", 0);
 		player.setUpPlayer();
 		System.out.println("\'" + player.playerPort + "\' has been set as your port.");
-		
 		player.receiveCards();
 		player.playCard();
+		
 
 		
 	}
