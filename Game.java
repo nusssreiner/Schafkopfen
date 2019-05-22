@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.InputMismatchException;
@@ -20,27 +21,27 @@ public class Game {
 		System.out.println("Enter the ID of the player who gets to start! (1-4)");
 		Scanner sc = new Scanner(System.in);
 		int whoStarts = 0;
-		while (whoStarts == 0 || whoStarts > 4) {
+		while (whoStarts <= 0 || whoStarts >= 5) {
 			try {
 				whoStarts = sc.nextInt();
-				if (whoStarts == 0 || whoStarts > 4) {
+				if (whoStarts <= 0 || whoStarts >= 5) {
 					System.out.println("Invalid entry, try again");
 				}
 				else {
 					System.out.println("Player " + whoStarts + " is going to start.");
 				}
 			}
-			catch ( InputMismatchException e) {
+			catch (InputMismatchException e) {
 				System.out.println("Invalid entry, try again");
-			};
-			
+				sc.next();
+			}			
 		}
 		
 		Game.createGame(3001, 3002, 3003, 3004, whoStarts);
 		System.out.println("Connecting to players and handing out cards.");
 		LocalPlayer.startGame(port1, port2, port3, port4);
 		System.out.println("Opening Table and asking Player " + startingPlayer + " to start.");
-		Table table = new Table (2);
+		Table table = new Table (startingPlayer);
 		table.requestOneRound();
 	}
 	

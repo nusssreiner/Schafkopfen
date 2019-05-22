@@ -99,7 +99,7 @@ public class Player {
 		while (cardId == 0) {
 			try {
 				Socket socket = new Socket("127.0.0.1", port);
-				Thread.sleep(200);
+				Thread.sleep(500);
 				Scanner scanner = new Scanner (socket.getInputStream());
 				Scanner input = new Scanner (System.in);
 				System.out.println();
