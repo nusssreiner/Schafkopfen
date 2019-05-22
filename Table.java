@@ -9,7 +9,7 @@ public class Table {
 	
 	public Table (int beginningPlayer) {
 		nextPlayer = beginningPlayer;
-		port1 = 3001; /*Game.getPort1();*/
+		port1 = Game.getPort1();
 		port2 = Game.getPort2();
 		port3 = Game.getPort3();
 		port4 = Game.getPort4();
