@@ -93,17 +93,18 @@ public class Player {
 				Thread.sleep(200);
 				Scanner scanner = new Scanner (socket.getInputStream());
 				Scanner input = new Scanner (System.in);
-	//			System.out.println(scanner.next());
+				System.out.println();
+				System.out.println("Table requests: \'" + scanner.next() + " " +  scanner.next() + " " + scanner.next() + "\'");
 				PrintStream printStream = new PrintStream(socket.getOutputStream());
 				System.out.println("You have the following cards available:");
-				System.out.println("card1 = " + card1); //planning on adding class card with return method
-				System.out.println("card2 = " + card2);
-				System.out.println("card3 = " + card3);
-				System.out.println("card4 = " + card4);
-				System.out.println("card5 = " + card5);
-				System.out.println("card6 = " + card6);
-				System.out.println("card7 = " + card7);
-				System.out.println("card8 = " + card8);
+				System.out.println("card1 = " + Card.getCardInfo(card1)); //planning on adding class card with return method
+				System.out.println("card2 = " + Card.getCardInfo(card2));
+				System.out.println("card3 = " + Card.getCardInfo(card3));
+				System.out.println("card4 = " + Card.getCardInfo(card4));
+				System.out.println("card5 = " + Card.getCardInfo(card5));
+				System.out.println("card6 = " + Card.getCardInfo(card6));
+				System.out.println("card7 = " + Card.getCardInfo(card7));
+				System.out.println("card8 = " + Card.getCardInfo(card8));
 				System.out.println("Enter your choice by typing cardx");
 				
 				String choice;
