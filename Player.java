@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Player {
 	
-	int playerPort, card1, card2, card3, card4, card5, card6, card7, card8, port;
+	int playerPort, card1, card2, card3, card4, card5, card6, card7, card8, port, firstCard;
 	String playerName;
 	
 	
@@ -93,6 +93,34 @@ public class Player {
 		}	
 	}
 	
+	//compare color of 2 cards
+	private boolean compareType(int id1, int id2) {
+		return Card.getColor(id1).equals(Card.getColor(id2));
+	}
+	
+	//check wheather there is a card of the type of the first card
+	private boolean checkForType() {
+		return compareType(card1, firstCard) || compareType(card2, firstCard) || compareType(card3, firstCard) || compareType(card4, firstCard) || 
+			   compareType(card5, firstCard) || compareType(card6, firstCard) || compareType(card7, firstCard) || compareType(card8, firstCard);
+	}
+	
+	
+	//check validity of a card, that is about to be played
+	private boolean checkValidity(int id) {
+		if (id == 0) {
+			return false;
+		}
+		else if (firstCard == 0) {
+			return true;
+		}
+		else if (checkForType()) {
+			return compareType(id, firstCard);
+		}
+		else {
+			return true;
+		}
+	}
+	
 	//play card
 	public void playCard() throws InterruptedException {
 		int cardId = 0;
@@ -103,7 +131,7 @@ public class Player {
 				Scanner scanner = new Scanner (socket.getInputStream());
 				Scanner input = new Scanner (System.in);
 				System.out.println();
-				int firstCard = scanner.nextInt();
+				firstCard = scanner.nextInt();
 				System.out.println("Table states: \'" + scanner.nextLine() + "\'");
 				System.out.println("Table states: \'" + scanner.nextLine() + "\'");
 				System.out.println("Table requests: \'" + scanner.nextLine() + "\'");
@@ -117,6 +145,7 @@ public class Player {
 				System.out.println("card6 = " + Card.getCardInfo(card6));
 				System.out.println("card7 = " + Card.getCardInfo(card7));
 				System.out.println("card8 = " + Card.getCardInfo(card8));
+				System.out.println("Choose a valid one! (pay attention to the color of the first card played!)");
 				System.out.println("Enter your choice by typing cardx");
 				
 				String choice;
@@ -148,8 +177,9 @@ public class Player {
 							cardId = card8;
 							break;
 					}
-					if (cardId == 0) {
+					if (!checkValidity(cardId)) {
 						System.out.println("Invalid entry, try again");
+						cardId = 0;
 						choice = input.nextLine();
 					}
 				
@@ -178,4 +208,4 @@ public class Player {
 		
 	}
 	
-}
+} 
