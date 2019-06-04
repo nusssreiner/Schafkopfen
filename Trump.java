@@ -1,5 +1,5 @@
 
-public enum Type {
+public enum Trump {
 	TRUMP,
 	NOTTRUMP,
 }

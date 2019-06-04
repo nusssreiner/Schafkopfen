@@ -95,27 +95,44 @@ public class Player {
 	}
 	
 	//compare color of 2 cards
-	private boolean compareType(int id1, int id2) {
+	private boolean compareColor(int id1, int id2) {
 		return Card.getColor(id1).equals(Card.getColor(id2));
 	}
 	
-	//check wheather there is a card of the type of the first card
-	private boolean checkForType() {
-		return compareType(card1, firstCard) || compareType(card2, firstCard) || compareType(card3, firstCard) || compareType(card4, firstCard) || 
-			   compareType(card5, firstCard) || compareType(card6, firstCard) || compareType(card7, firstCard) || compareType(card8, firstCard);
+	//check whether there is a card of the trump of the first card
+	private boolean checkForTrump() {
+		return Card.isTrump(card1) || Card.isTrump(card2) || Card.isTrump(card3) || Card.isTrump(card4) ||
+			   Card.isTrump(card5) || Card.isTrump(card6) || Card.isTrump(card7) || Card.isTrump(card8);
 	}
-	
+	private boolean checkForColor() {
+		return compareColor(card1, firstCard) || compareColor(card2, firstCard) || compareColor(card3, firstCard) || compareColor(card4, firstCard) ||
+				compareColor(card5, firstCard) || compareColor(card6, firstCard) || compareColor(card7, firstCard) || compareColor(card8, firstCard);
+	}
 	
 	//check validity of a card, that is about to be played
 	private boolean checkValidity(int id) {
+		//there was no card assigned, the entry was not valid
 		if (id == 0) {
 			return false;
 		}
+		//a card is always valid, if it is the first one
 		else if (firstCard == 0) {
 			return true;
 		}
-		else if (checkForType()) {
-			return compareType(id, firstCard);
+		// if the first card was a trump, then a trump has to be played if available
+		else if (Card.isTrump(firstCard)) {
+			if (!checkForTrump()) {
+				return true;
+			}
+			else if (Card.isTrump(id)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (checkForColor()) {
+			return compareColor(id, firstCard);
 		}
 		else {
 			return true;
