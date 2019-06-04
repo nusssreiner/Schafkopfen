@@ -22,7 +22,7 @@ public class Game {
     }
 
     private void startRound (int startingPlayer) throws IOException {
-        Round round = new Round(startingPlayer, this);
+        Round round = new Round(startingPlayer, this, RoundType.SAUSPIEL);
         round.startRound();
     }
 

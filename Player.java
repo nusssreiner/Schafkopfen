@@ -98,11 +98,12 @@ public class Player {
 		return Card.getColor(id1).equals(Card.getColor(id2));
 	}
 	
-	//check whether there is a card of the trump of the first card
+	//check whether one of the cards is a trump
 	private boolean checkForTrump() {
 		return Card.isTrump(card1) || Card.isTrump(card2) || Card.isTrump(card3) || Card.isTrump(card4) ||
 			   Card.isTrump(card5) || Card.isTrump(card6) || Card.isTrump(card7) || Card.isTrump(card8);
 	}
+
 	private boolean checkForColor() {
 		return compareColor(card1, firstCard) || compareColor(card2, firstCard) || compareColor(card3, firstCard) || compareColor(card4, firstCard) ||
 				compareColor(card5, firstCard) || compareColor(card6, firstCard) || compareColor(card7, firstCard) || compareColor(card8, firstCard);
@@ -220,8 +221,10 @@ public class Player {
 		System.out.println("\'" + player.playerPort + "\' has been set as your port.");
 		player.receiveCards();
 		player.playCard();
-		
+
 	}
 
-
+	private static void defineRoundType (String roundOfType) {
+		RoundType roundType = RoundType.valueOf(roundOfType);
+	}
 } 

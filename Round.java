@@ -5,12 +5,14 @@ import java.util.stream.Collectors;
 public class Round {
 	int startingPlayer;
 	Game game;
+	RoundType type;
 
-
-	public Round(int startingPlayer, Game game) {
+	public Round(int startingPlayer, Game game, RoundType type) {
 		this.game = game;
 		this.startingPlayer = startingPlayer;
+		this.type = type;
 	}
+
 
 	//start a game (mix cards, pass to players)
 	public void startRound() throws IOException {
