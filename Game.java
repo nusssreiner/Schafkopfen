@@ -61,7 +61,7 @@ public class Game {
 		player4.handOutCards();
 
 		System.out.println("Opening Table and asking Player " + startingPlayer + " to start.");
-		Table table = new Table(this, startingPlayer);
+		Table table = new Table(this);
 		table.requestOneRound();
 	}
 
@@ -78,19 +78,17 @@ public class Game {
 		}
 	}
 	
-	public int getPort1 () {
-		return port1;
+	public int getPort (int playerId) {
+		switch (playerId) {
+			case 1:
+				return port1;
+			case 2:
+				return port2;
+			case 3:
+				return port3;
+			default:
+				return port4;
+		}
 	}
-	
-	public int getPort2 () {
-		return port2;
-	}
-	
-	public int getPort3 () {
-		return port3;
-	}
-	
-	public int getPort4 () {
-		return port4;
-	}
+
 }
