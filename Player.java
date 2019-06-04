@@ -79,7 +79,6 @@ public class Player {
 				card8 = inputCard8;
 				System.out.println();
 				System.out.println("You received the following cards: ");
-				System.out.println(card1);
 				System.out.println(Card.getCardInfo(card1));
 				System.out.println(Card.getCardInfo(card2));
 				System.out.println(Card.getCardInfo(card3));
@@ -140,7 +139,7 @@ public class Player {
 	}
 	
 	//play card
-	public void playCard() throws InterruptedException {
+	private void playCard() throws InterruptedException {
 		int cardId = 0;
 		while (cardId == 0) {
 			try {
@@ -215,15 +214,14 @@ public class Player {
 	}
 	
 	public static void main (String[] args) throws IOException, InterruptedException {
-		
+
 		Player player = new Player("0", 0);
 		player.setUpPlayer();
 		System.out.println("\'" + player.playerPort + "\' has been set as your port.");
 		player.receiveCards();
 		player.playCard();
 		
-
-		
 	}
-	
+
+
 } 

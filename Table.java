@@ -6,15 +6,15 @@ import java.util.Scanner;
 
 public class Table {
 	int nextPlayer, port1, port2, port3, port4, card1, card2, card3, card4, numberOfCards;
-	Game game;
+	Round round;
 	
-	public Table (Game game) {
-		this.game = game;
-		nextPlayer = game.startingPlayer;
-		port1 = game.getPort(1);
-		port2 = game.getPort(2);
-		port3 = game.getPort(3);
-		port4 = game.getPort(4);
+	public Table (Round round) {
+		this.round = round;
+		nextPlayer = round.startingPlayer;
+		port1 = round.game.getPort(1);
+		port2 = round.game.getPort(2);
+		port3 = round.game.getPort(3);
+		port4 = round.game.getPort(4);
 	}
 
 	//send request to one player to play a card
@@ -23,7 +23,7 @@ public class Table {
 	public void requestOneRound() throws IOException {
 		for (numberOfCards = 0; numberOfCards < 4; numberOfCards++) {
 			int cardJustPlayed;
-			ServerSocket serverSocket = new ServerSocket(game.getPort(nextPlayer));
+			ServerSocket serverSocket = new ServerSocket(round.game.getPort(nextPlayer));
 			Socket socket = serverSocket.accept();
 			PrintStream printStream = new PrintStream(socket.getOutputStream());
 			printStream.println(card1);
