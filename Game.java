@@ -52,6 +52,9 @@ public class Game {
         Game game = new Game(3001, 3002, 3003, 3004);
         game.startGame();
         game.startRound(game.startingPlayer);
+        game.startingPlayer++;
+        game.startingPlayer = game.startingPlayer % 4;
+        game.startingPlayer = game.startingPlayer == 0 ? 4 : game.startingPlayer;
     }
 
     public int getPort (int playerId) {

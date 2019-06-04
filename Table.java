@@ -58,6 +58,7 @@ public class Table {
 			serverSocket.close();
 			nextPlayer++;
 			nextPlayer = nextPlayer % 4;
+			nextPlayer = nextPlayer == 0 ? 4 : nextPlayer;
 		}
 	}
 }
