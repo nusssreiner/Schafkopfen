@@ -21,7 +21,7 @@ public class LocalPlayer {
 		return numberOfCards;
 	}
 	
-		void assignCard (Card card) {
+	void assignCard (Card card) {
 		if (numberOfCards < 8) {
 			cards[numberOfCards] = card;
 		}
