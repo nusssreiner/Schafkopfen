@@ -1,10 +1,14 @@
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
-    private int port1, port2, port3, port4, startingPlayer;
+    int port1, port2, port3, port4, startingPlayer;
     LocalPlayer player1, player2, player3, player4;
+    Round round;
 
     private Game (int p1, int p2, int p3, int p4) {
         port1 = p1;
@@ -13,18 +17,20 @@ public class Game {
         port4 = p4;
     }
 
-    private void startGame () {
+    private void startGame () throws IOException {
         chooseStartingPlayer();
-        player1 = new LocalPlayer (port1, 1);
-        player2 = new LocalPlayer (port2, 2);
-        player3 = new LocalPlayer (port3, 3);
-        player4 = new LocalPlayer (port4, 4);
+        player1 = new LocalPlayer (port1, 1, this);
+        player2 = new LocalPlayer (port2, 2, this);
+        player3 = new LocalPlayer (port3, 3, this);
+        player4 = new LocalPlayer (port4, 4, this);
     }
 
-    private void startRound (int startingPlayer) throws IOException {
-        Round round = new Round(startingPlayer, this, RoundType.SAUSPIEL);
+    private void startRound () throws IOException {
+        round = new Round(this);
         round.startRound();
     }
+
+
 
     private void chooseStartingPlayer() {
         System.out.println("Enter the ID of the player who gets to start! (1-4)");
@@ -48,13 +54,17 @@ public class Game {
         startingPlayer = whoStarts;
     }
 
+
+
+
     public static void main(String[] args) throws IOException {
         Game game = new Game(3001, 3002, 3003, 3004);
         game.startGame();
-        game.startRound(game.startingPlayer);
+        game.startRound();
         game.startingPlayer++;
         game.startingPlayer = game.startingPlayer % 4;
         game.startingPlayer = game.startingPlayer == 0 ? 4 : game.startingPlayer;
+
     }
 
     public int getPort (int playerId) {

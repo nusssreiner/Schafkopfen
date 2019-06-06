@@ -7,19 +7,20 @@ import java.util.Scanner;
 public class Table {
 	int nextPlayer, port1, port2, port3, port4, card1, card2, card3, card4, numberOfCards;
 	Round round;
+	CardSet cardSet;
 	
 	public Table (Round round) {
 		this.round = round;
 		nextPlayer = round.startingPlayer;
+		cardSet = new CardSet(round.type);
 		port1 = round.game.getPort(1);
 		port2 = round.game.getPort(2);
 		port3 = round.game.getPort(3);
 		port4 = round.game.getPort(4);
 	}
 
-	//send request to one player to play a card
 
-	//send request to player to play card
+	//send request to 4 players to play card
 	public void requestOneRound() throws IOException {
 		for (numberOfCards = 0; numberOfCards < 4; numberOfCards++) {
 			int cardJustPlayed;
@@ -30,11 +31,11 @@ public class Table {
 			if (card1 == 0) {
 				printStream.println("No cards have been played!");
 			} else if (card2 == 0) {
-				printStream.println(Card.getCardInfo(card1) + " has been played.");
+				printStream.println(cardSet.getCardInfo(card1) + " has been played.");
 			} else if (card3 == 0) {
-				printStream.println("The cards \'" + Card.getCardInfo(card1) + "\' and \'" + Card.getCardInfo(card2) + "\' have been played.");
+				printStream.println("The cards \'" + cardSet.getCardInfo(card1) + "\' and \'" + cardSet.getCardInfo(card2) + "\' have been played.");
 			} else {
-				printStream.println("The cards \'" + Card.getCardInfo(card1) + "\', \'" + Card.getCardInfo(card2) + "\' and \'" + Card.getCardInfo(card3) + "\' have been played.");
+				printStream.println("The cards \'" + cardSet.getCardInfo(card1) + "\', \'" + cardSet.getCardInfo(card2) + "\' and \'" + cardSet.getCardInfo(card3) + "\' have been played.");
 			}
 			printStream.println("It's your turn.");
 			printStream.println("Play a card!");
@@ -54,7 +55,7 @@ public class Table {
 					card4 = cardJustPlayed;
 					break;
 			}
-			System.out.println("The following card was played by Player " + nextPlayer + ": " + Card.getCardInfo(cardJustPlayed));
+			System.out.println("The following card was played by Player " + nextPlayer + ": " + cardSet.getCardInfo(cardJustPlayed));
 			serverSocket.close();
 			nextPlayer++;
 			nextPlayer = nextPlayer % 4;

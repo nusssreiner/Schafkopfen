@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class Player {
 	
 	int playerPort, card1, card2, card3, card4, card5, card6, card7, card8, port, firstCard;
+	CardSet cardSet;
+	RoundType roundType;
 	String playerName;
 	
 	
@@ -59,6 +61,8 @@ public class Player {
 				Socket socket = new Socket("127.0.0.1", port);
 				Thread.sleep(500);
 				Scanner scanner = new Scanner (socket.getInputStream());
+				roundType = RoundType.valueOf(scanner.nextLine());
+				cardSet = new CardSet(roundType);
 				inputCard1 = scanner.nextInt();
 				inputCard2 = scanner.nextInt();
 				inputCard3 = scanner.nextInt();
@@ -79,29 +83,29 @@ public class Player {
 				card8 = inputCard8;
 				System.out.println();
 				System.out.println("You received the following cards: ");
-				System.out.println(Card.getCardInfo(card1));
-				System.out.println(Card.getCardInfo(card2));
-				System.out.println(Card.getCardInfo(card3));
-				System.out.println(Card.getCardInfo(card4));
-				System.out.println(Card.getCardInfo(card5));
-				System.out.println(Card.getCardInfo(card6));
-				System.out.println(Card.getCardInfo(card7));
-				System.out.println(Card.getCardInfo(card8));
+				System.out.println(cardSet.getCardInfo(card1));
+				System.out.println(cardSet.getCardInfo(card2));
+				System.out.println(cardSet.getCardInfo(card3));
+				System.out.println(cardSet.getCardInfo(card4));
+				System.out.println(cardSet.getCardInfo(card5));
+				System.out.println(cardSet.getCardInfo(card6));
+				System.out.println(cardSet.getCardInfo(card7));
+				System.out.println(cardSet.getCardInfo(card8));
 			}	
 			catch ( IOException e ){
 			}
 		}	
 	}
-	
+
 	//compare color of 2 cards
 	private boolean compareColor(int id1, int id2) {
-		return Card.getColor(id1).equals(Card.getColor(id2));
+		return cardSet.getColor(id1).equals(cardSet.getColor(id2));
 	}
 	
 	//check whether one of the cards is a trump
 	private boolean checkForTrump() {
-		return Card.isTrump(card1) || Card.isTrump(card2) || Card.isTrump(card3) || Card.isTrump(card4) ||
-			   Card.isTrump(card5) || Card.isTrump(card6) || Card.isTrump(card7) || Card.isTrump(card8);
+		return cardSet.isTrump(card1) || cardSet.isTrump(card2) || cardSet.isTrump(card3) || cardSet.isTrump(card4) ||
+			   cardSet.isTrump(card5) || cardSet.isTrump(card6) || cardSet.isTrump(card7) || cardSet.isTrump(card8);
 	}
 
 	private boolean checkForColor() {
@@ -120,11 +124,11 @@ public class Player {
 			return true;
 		}
 		// if the first card was a trump, then a trump has to be played if available
-		else if (Card.isTrump(firstCard)) {
+		else if (cardSet.isTrump(firstCard)) {
 			if (!checkForTrump()) {
 				return true;
 			}
-			else if (Card.isTrump(id)) {
+			else if (cardSet.isTrump(id)) {
 				return true;
 			}
 			else {
@@ -155,14 +159,14 @@ public class Player {
 				System.out.println("Table requests: \'" + scanner.nextLine() + "\'");
 				PrintStream printStream = new PrintStream(socket.getOutputStream());
 				System.out.println("You have the following cards available:");
-				System.out.println("card1 = " + Card.getCardInfo(card1)); //planning on adding class card with return method
-				System.out.println("card2 = " + Card.getCardInfo(card2));
-				System.out.println("card3 = " + Card.getCardInfo(card3));
-				System.out.println("card4 = " + Card.getCardInfo(card4));
-				System.out.println("card5 = " + Card.getCardInfo(card5));
-				System.out.println("card6 = " + Card.getCardInfo(card6));
-				System.out.println("card7 = " + Card.getCardInfo(card7));
-				System.out.println("card8 = " + Card.getCardInfo(card8));
+				System.out.println("card1 = " + cardSet.getCardInfo(card1));
+				System.out.println("card2 = " + cardSet.getCardInfo(card2));
+				System.out.println("card3 = " + cardSet.getCardInfo(card3));
+				System.out.println("card4 = " + cardSet.getCardInfo(card4));
+				System.out.println("card5 = " + cardSet.getCardInfo(card5));
+				System.out.println("card6 = " + cardSet.getCardInfo(card6));
+				System.out.println("card7 = " + cardSet.getCardInfo(card7));
+				System.out.println("card8 = " + cardSet.getCardInfo(card8));
 				System.out.println("Choose a valid one! (pay attention to the color of the first card played!)");
 				System.out.println("Enter your choice by typing cardx");
 				
@@ -203,7 +207,7 @@ public class Player {
 				
 				}
 				printStream.println(cardId);
-				System.out.println("You played your card: " + Card.getCardInfo(cardId));
+				System.out.println("You played your card: " + cardSet.getCardInfo(cardId));
 				scanner.close();
 				socket.close();
 			}	

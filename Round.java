@@ -1,4 +1,8 @@
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -7,15 +11,42 @@ public class Round {
 	Game game;
 	RoundType type;
 
-	public Round(int startingPlayer, Game game, RoundType type) {
+	public Round(Game game) {
 		this.game = game;
-		this.startingPlayer = startingPlayer;
-		this.type = type;
+		startingPlayer = game.startingPlayer;
+		RoundType type;
 	}
 
+	//Asks the starting player to define the type of this round
+	private void setNextRoundType () throws IOException {
+
+		Scanner input = new Scanner(System.in);
+		System.out.println("Choose RoundType by typing 'typex'");
+		System.out.println("for now only 'type1' SAUSPIEL and 'type2' OACHESOLO are available");
+		type = null;
+		while (type == null) {
+			String choice = input.nextLine();
+			switch (choice) {
+				case "type1":
+					type = RoundType.SAUSPIEL;
+					break;
+				case "type2":
+					type = RoundType.OACHESOLO;
+					break;
+
+				default:
+					System.out.println("Invalid entry, try again");
+					type = null;
+					break;
+			}
+		}
+	}
 
 	//start a game (mix cards, pass to players)
 	public void startRound() throws IOException {
+
+		setNextRoundType();
+
 
 		shuffleCards();
 
