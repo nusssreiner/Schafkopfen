@@ -42,6 +42,7 @@ public class LocalPlayer {
 		for (Card card : cards) {
 			printStream.println(card.getCardId());
 		}
+		serverSocket.close();
 	}
 
 }
