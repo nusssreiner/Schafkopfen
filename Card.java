@@ -1,14 +1,14 @@
 
 
-	public class Card {
+	class Card {
 
 		Color color;
 		Number number;
 		Trump trump;
-		int cardId;
+		private int cardId;
 
 		//constructor
-		public Card(int Id) {
+		Card(int Id) {
 			cardId = Id;
 			switch (Id) {
 				case 1:
@@ -143,7 +143,7 @@
 			trump = Trump.NOTTRUMP;
 		}
 
-		public int getCardId() {
+		int getCardId() {
 			return cardId;
 		}
 	}

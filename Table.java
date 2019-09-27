@@ -4,24 +4,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Table {
-	int nextPlayer, port1, port2, port3, port4, card1, card2, card3, card4, numberOfCards;
-	Round round;
-	CardSet cardSet;
+class Table {
+	private int nextPlayer, card1, card2, card3;
+	private Round round;
+	private CardSet cardSet;
 	
-	public Table (Round round) {
+	Table (Round round) {
 		this.round = round;
 		nextPlayer = round.startingPlayer;
 		cardSet = new CardSet(round.type);
-		port1 = round.game.getPort(1);
-		port2 = round.game.getPort(2);
-		port3 = round.game.getPort(3);
-		port4 = round.game.getPort(4);
 	}
 
 
 	//send request to 4 players to play card
-	public void requestOneRound() throws IOException {
+	void requestOneTrick() throws IOException {
+		int numberOfCards;
 		for (numberOfCards = 0; numberOfCards < 4; numberOfCards++) {
 			int cardJustPlayed;
 			ServerSocket serverSocket = new ServerSocket(round.game.getPort(nextPlayer));
@@ -52,14 +49,12 @@ public class Table {
 					card3 = cardJustPlayed;
 					break;
 				case 3:
-					card4 = cardJustPlayed;
 					break;
 			}
 			System.out.println("The following card was played by Player " + nextPlayer + ": " + cardSet.getCardInfo(cardJustPlayed));
 			serverSocket.close();
 			nextPlayer++;
-			nextPlayer = nextPlayer % 4;
-			nextPlayer = nextPlayer == 0 ? 4 : nextPlayer;
+			nextPlayer = nextPlayer == 5 ? 4 : nextPlayer;
 		}
 	}
 }

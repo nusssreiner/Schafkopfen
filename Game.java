@@ -1,12 +1,10 @@
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
-    int port1, port2, port3, port4, startingPlayer;
+    private int port1, port2, port3, port4;
+    int startingPlayer;
     LocalPlayer player1, player2, player3, player4;
     Round round;
 
@@ -17,15 +15,15 @@ public class Game {
         port4 = p4;
     }
 
-    private void startGame () throws IOException {
-        chooseStartingPlayer();
+    private void startGame () {
         player1 = new LocalPlayer (port1, 1, this);
         player2 = new LocalPlayer (port2, 2, this);
         player3 = new LocalPlayer (port3, 3, this);
         player4 = new LocalPlayer (port4, 4, this);
+        chooseStartingPlayer();
     }
 
-    private void startRound () throws IOException {
+    private void startRound () throws IOException, InterruptedException {
         round = new Round(this);
         round.startRound();
     }
@@ -57,7 +55,7 @@ public class Game {
 
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Game game = new Game(3001, 3002, 3003, 3004);
         game.startGame();
         game.startRound();
@@ -67,7 +65,7 @@ public class Game {
 
     }
 
-    public int getPort (int playerId) {
+    int getPort (int playerId) {
         switch (playerId) {
             case 1:
                 return port1;
@@ -77,6 +75,19 @@ public class Game {
                 return port3;
             default:
                 return port4;
+        }
+    }
+
+    String getPlayerName (int playerId) {
+        switch (playerId) {
+            case 1:
+                return player1.name;
+            case 2:
+                return player2.name;
+            case 3:
+                return player3.name;
+            default:
+                return player4.name;
         }
     }
 }
