@@ -112,9 +112,12 @@ public class Player {
 				Scanner scanner = new Scanner(socket.getInputStream());
 				Thread.sleep(100);
 				int whichPlayer = scanner.nextInt();
+				System.out.println(scanner.nextLine());
 				switch (whichPlayer) {
 					case 1:
 						System.out.println("You're the first one to decide!");
+						Thread.sleep(200);
+						System.out.println(scanner.nextLine());
 						break;
 					case 2:
 						System.out.println("You're the second one to decide!");
@@ -129,6 +132,25 @@ public class Player {
 						System.out.println(scanner.nextLine());
 						break;
 				}
+				Scanner input = new Scanner(System.in);
+				PrintStream printStream = new PrintStream(socket.getOutputStream());
+				System.out.println("Enter \'y\' or \'n\', if you either want or don't want to play");
+				String wantToPlay = null;
+				while (wantToPlay == null) {
+					wantToPlay = input.nextLine();
+					switch (wantToPlay) {
+						case "y":
+							printStream.println("true");
+							break;
+						case "n":
+							printStream.println("false");
+							break;
+						default:
+							wantToPlay = null;
+							System.out.println("Wrong entry, try again");
+					}
+				}
+
 				wereAsked = true;
 			}
 			catch (IOException ignored){}

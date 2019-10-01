@@ -11,7 +11,7 @@ class Table {
 	
 	Table (Round round) {
 		this.round = round;
-		nextPlayer = round.startingPlayer;
+		nextPlayer = round.players[0];
 		cardSet = new CardSet(round.type);
 	}
 

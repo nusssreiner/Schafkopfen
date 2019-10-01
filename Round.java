@@ -7,68 +7,106 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class Round {
-	int startingPlayer;
-	int secondPlayer;
-	int thirdPlayer;
-	int lastPlayer;
-	private Boolean[] haveBeenAsked = new Boolean[3];
-	private Boolean[] wantsToPlay = new Boolean[3];
+	int[] players = new int[4]; //the first object is the id of the starting player, the second object the id of the second player in row and so on
+	private Boolean[] haveBeenAsked = new Boolean[4];
+	private Boolean[] wantsToPlay = new Boolean[4];
 	Game game;
 	RoundType type;
 
 	Round(Game game) {
 		this.game = game;
-		startingPlayer = game.startingPlayer;
-		secondPlayer = (startingPlayer + 1) == 5 ? 1 : (startingPlayer + 1);
-		thirdPlayer = (secondPlayer + 1) == 5 ? 1 : (secondPlayer + 1);
-		lastPlayer = (thirdPlayer + 1) == 5 ? 1 : (thirdPlayer + 1);
 		type = null;
+
+	}
+
+	private void setPlayersIds () {
+		players[0] = game.startingPlayer;
+		players[1] = (players[0] + 1) == 5 ? 1 : (players[0] + 1);
+		players[2] = (players[1] + 1) == 5 ? 1 : (players[1] + 1);
+		players[3] = (players[2] + 1) == 5 ? 1 : (players[2] + 1);
+	}
+
+	private void setBooleanArraysToZero () {
+		for (int i = 0; i < haveBeenAsked.length; i++) {
+			haveBeenAsked[i] = false;
+		}
+		for (int i = 0; i < wantsToPlay.length; i++) {
+			wantsToPlay[i] = false;
+		}
 	}
 
 	//get information which Players chose to play,
-	private String getWhoWantsToPlay () {
+	private String getWhoWantsToPlay() {
 		if (!haveBeenAsked[0]) {
 			return "Feel free to choose!";
-		}
-		else if (!haveBeenAsked[1]) {
+		} else if (!haveBeenAsked[1]) {
 			if (!wantsToPlay[0]) {
-				return "The starting player " + game.player1.name + " chose not to play";
+				return "The starting player " + game.getPlayerName(players[0]) + " chose not to play.";
+			} else {
+				return "The starting player " + game.getPlayerName(players[0]) + " wants to play.";
 			}
-			else {
-				return "The starting player " + game.player1.name + " wants to play";
+		} else if (!haveBeenAsked[2]) {
+			if (wantsToPlay[0] && wantsToPlay[1]) {
+				return game.getPlayerName(players[0]) + " and " + game.getPlayerName(players[1]) + " both want to play";
+			} else if (!(!wantsToPlay[0] && wantsToPlay[1])) {
+				return game.getPlayerName(players[0]) + " wants to play, " + game.getPlayerName(players[1]) + " does not.";
+			} else if (!(wantsToPlay[0] && !wantsToPlay[1])) {
+				return game.getPlayerName(players[0]) + " does not want to play, " + game.getPlayerName(players[1]) + " does.";
+			} else if (!wantsToPlay[0] && !wantsToPlay[1]) {
+				return game.getPlayerName(players[0]) + " and " + game.getPlayerName(players[1]) + " both want to play";
+			}
+		} else if (!haveBeenAsked[3]) {
+			if (!wantsToPlay[0] && !wantsToPlay[1] && !wantsToPlay[2]) {
+				return "No one wants to play yet";
+			} else {
+				return "sb wants to play already";
 			}
 		}
-		else if (!haveBeenAsked[2]) {
-			if (!(wantsToPlay[0] && wantsToPlay[1]))
-				return game.player1.name
-		}
-		else if (!haveBeenAsked[3]) {
+		return "No one wants to play";
+	}
 
+	private int getCorrespondingObjectNumberOfArray (int playerId) {
+		if (playerId == players[0]) {
+			return 0;
+		} else if (playerId == players[1]) {
+			return 1;
+		} else if (playerId == players[2]) {
+			return 2;
+		} else if (playerId == players[3]) {
+			return 3;
+		} else {
+			return 4;
 		}
-
 	}
 
 	//Asks the starting player to define the type of this round
-	private void askPlayerToDefineRoundType (int playerId) throws IOException {
+	private void askPlayerToDefineRoundType (int playerId) throws IOException, InterruptedException{
 		ServerSocket serverSocket = new ServerSocket(game.getPort(playerId));
 		Socket socket = serverSocket.accept();
 		PrintStream printStream = new PrintStream(socket.getOutputStream());
-		if (playerId == startingPlayer) {
-			printStream.println(1);
-			haveBeenAsked[0] = true;
-		}
-		else if (playerId == secondPlayer) {
-			printStream.println(2);
-			printStream.println(getWhoWantsToPlay());
-			haveBeenAsked[1] = true;
-		}
-		else if (playerId == thirdPlayer) {
-			printStream.println(3);
-			haveBeenAsked[2] = true;
-		}
-		else if (playerId == lastPlayer) {
-			printStream.println(4);
-			haveBeenAsked[3] = true;
+		Scanner scanner = new Scanner(socket.getInputStream());
+		while (!haveBeenAsked[getCorrespondingObjectNumberOfArray(playerId)]) {
+			if (playerId == players[0]) {
+				printStream.println(1);
+				printStream.println(getWhoWantsToPlay());
+				wantsToPlay[0] = Boolean.valueOf(scanner.nextLine());
+				haveBeenAsked[0] = true;
+			} else if (playerId == players[1]) {
+				printStream.println(2);
+				printStream.println(getWhoWantsToPlay());
+				wantsToPlay[1] = Boolean.valueOf(scanner.nextLine());
+				haveBeenAsked[1] = true;
+			} else if (playerId == players[2]) {
+				printStream.println(3);
+				printStream.println(getWhoWantsToPlay());
+				wantsToPlay[2] = Boolean.valueOf(scanner.nextLine());
+				haveBeenAsked[2] = true;
+			} else if (playerId == players[3]) {
+				printStream.println(4);
+				printStream.println(getWhoWantsToPlay());
+				wantsToPlay[3] = Boolean.valueOf(scanner.nextLine());
+				haveBeenAsked[3] = true;
+			}
 		}
 		serverSocket.close();
 	}
@@ -96,36 +134,38 @@ class Round {
 		}
 	}
 
-	private void handOutCards() throws IOException, InterruptedException {
+	private void handOutCards () throws IOException, InterruptedException {
 		game.player1.handOutCards();
 		game.player2.handOutCards();
 		game.player3.handOutCards();
 		game.player4.handOutCards();
-		System.out.println("These are the player's names:");
-		System.out.println(game.player1.name);
-		System.out.println(game.player2.name);
-		System.out.println(game.player3.name);
-		System.out.println(game.player4.name);
 	}
 
 	//start a game (mix cards, pass to players)
-	void startRound() throws IOException, InterruptedException {
+	void startRound () throws IOException, InterruptedException {
+		setBooleanArraysToZero();
+		setPlayersIds();
+
 		setNextRoundType();
 		shuffleCards();
 
 		handOutCards();
-		System.out.println(startingPlayer + "" + secondPlayer + "" + thirdPlayer + "" + lastPlayer);
-		askPlayerToDefineRoundType(startingPlayer);
-		askPlayerToDefineRoundType(secondPlayer);
-		askPlayerToDefineRoundType(thirdPlayer);
-		askPlayerToDefineRoundType(lastPlayer);
+		askPlayerToDefineRoundType(players[0]);
+		askPlayerToDefineRoundType(players[1]);
+		askPlayerToDefineRoundType(players[2]);
+		askPlayerToDefineRoundType(players[3]);
+		System.out.println("The 1. Player " + players[0] + " wants to play: " + wantsToPlay[0]);
+		System.out.println("The 2. Player " + players[1] + " wants to play: " + wantsToPlay[1]);
+		System.out.println("The 3. Player " + players[2] + " wants to play: " + wantsToPlay[2]);
+		System.out.println("The 4. Player " + players[3] + " wants to play: " + wantsToPlay[3]);
 
-		System.out.println("Opening Table and asking Player " + startingPlayer + " to define the roundType.");
-		Table table = new Table(this); 
+
+		//System.out.println("Opening Table and asking Player " + startingPlayer + " to define the roundType.");
+		Table table = new Table(this);
 		table.requestOneTrick();
 	}
 
-	private void shuffleCards() {
+	private void shuffleCards () {
 		List<LocalPlayer> availablePlayers = Arrays.asList(game.player1, game.player2, game.player3, game.player4);
 
 		for (int i = 1; i <= 32; i++) {
